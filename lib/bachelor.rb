@@ -1,42 +1,62 @@
 require "pry"
 
 def get_first_name_of_season_winner(data, season)
-  girl_name = ""
   data[season].each do |girl|
-  	# binding.pry
-  	if girl[:status] == ""
-  		girl_name = girl[:name].split[0]
-  	binding.pry
+  	if girl["status"] == "Winner"
+  		return girl["name"].split[0]
   	end
   end
-  # binding.pry
-  girl_name
 end
+# binding.pry
 
 def get_contestant_name(data, occupation)
   # code here
-
-  data.each do |girl|
-  	if girl[:occupation] == occupation
+  data.each do |season, girls|
+  	girls.each do |girl_stats|
+  	# binding.pry
+  		if girl_stats["occupation"] == occupation
+  			return girl_stats["name"]
+  		end
   	end
   end
 end
 
 def count_contestants_by_hometown(data, hometown)
-  # code here
+	counter = 0
+	data.each do |season, girls|
+  	girls.each do |girl_stats|
+  	# binding.pry
+  		if girl_stats["hometown"] == hometown
+  			counter += 1
+  		end
+  	end
+  end
+  counter
 end
 
 def get_occupation(data, hometown)
-  # code here
+  data.each do |season, girls|
+  	girls.each do |girl_stats|
+  	# binding.pry
+  		if girl_stats["hometown"] == hometown
+  			return girl_stats["occupation"]
+  		end
+  	end
+  end
 end
 
 def get_average_age_for_season(data, season)
-  # code here
+	counter = 0
+	total_age = 0
+	data[season].each do |girl|
+		total_age += girl["age"].to_f
+  		counter += 1
+  	end
+  (total_age/counter).round
 end
 
 
-
-contestant = {
+collection = {
    "season 19":[
       {
          "name":"Ashley Iaconetti",
@@ -2091,9 +2111,4 @@ contestant = {
    ]
 }
 
-
-
-get_first_name_of_season_winner(contestant, :"season 19")
-
-
-
+count_contestants_by_hometown(collection, :"New York")
